@@ -81,7 +81,7 @@ CONFIG_RTW_IPCAM_APPLICATION = n
 CONFIG_RTW_REPEATER_SON = n
 CONFIG_RTW_WIFI_HAL = n
 ########################## Debug ###########################
-CONFIG_RTW_DEBUG = y
+CONFIG_RTW_DEBUG = n
 # default log level is _DRV_INFO_ = 4,
 # please refer to "How_to_set_driver_debug_log_level.doc" to set the available level.
 CONFIG_RTW_LOG_LEVEL = 3
@@ -101,7 +101,7 @@ CONFIG_RTW_SDIO_PM_KEEP_POWER = y
 ###################### MP HW TX MODE FOR VHT #######################
 CONFIG_MP_VHT_HW_TX_MODE = y
 ###################### Platform Related #######################
-CONFIG_PLATFORM_I386_PC = y
+CONFIG_PLATFORM_I386_PC = n
 CONFIG_PLATFORM_ANDROID_X86 = n
 CONFIG_PLATFORM_ANDROID_INTEL_X86 = n
 CONFIG_PLATFORM_JB_X86 = n
@@ -117,6 +117,7 @@ CONFIG_PLATFORM_MSTAR389 = n
 CONFIG_PLATFORM_MT53XX = n
 CONFIG_PLATFORM_ARM_MX51_241H = n
 CONFIG_PLATFORM_FS_MX61 = n
+CONFIG_PLATFORM_ARM_IMX6S = y
 CONFIG_PLATFORM_ACTIONS_ATJ227X = n
 CONFIG_PLATFORM_TEGRA3_CARDHU = n
 CONFIG_PLATFORM_TEGRA4_DALMORE = n
@@ -1439,6 +1440,15 @@ CROSS_COMPILE:=mipsel-linux-
 KVER:=
 KSRC ?= /usr/src/DMP_Kernel/jupiter/linux-2.6.12
 endif
+
+ifeq ($(CONFIG_PLATFORM_ARM_IMX6S), y)
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN -DCONFIG_WIRELESS_EXT
+ARCH:= arm
+CROSS_COMPILE:= arm-buildroot-linux-gnueabihf-
+KVER:= 4.9.11
+KSRC ?= /home/vagrant/proj/hmly-bld/output/build/linux
+endif
+
 
 ifeq ($(CONFIG_PLATFORM_MT53XX), y)
 EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN -DCONFIG_PLATFORM_MT53XX
